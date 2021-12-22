@@ -1,0 +1,16 @@
+docs
+mael.config.js
+
+# Dependencies
+/node_modules
+
+# Production
+/build
+
+# Generated files
+.docusaurus
+.cache-loader
+
+/.yarn/*
+!/.yarn/releases
+!/.yarn/sdks
