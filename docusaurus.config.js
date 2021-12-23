@@ -152,6 +152,10 @@ const config = {
         position: `left`,
         label: `Docs`,
       }, {
+        href: `https://mael.dev/packages`,
+        label: `See Also`,
+        position: `left`,
+      }, {
         href: `https://github.com/arcanis/${baseConfig.repository}`,
         label: `GitHub`,
         position: `right`,
@@ -173,6 +177,9 @@ const config = {
         items: [{
           label: `GitHub`,
           href: `https://github.com/arcanis/${baseConfig.repository}`,
+        }, {
+          label: `See Also`,
+          href: `https://mael.dev/packages`,
         }],
       }],
       copyright: `Copyright © ${new Date().getFullYear()} Maël Nison. Documentation built with Docusaurus.`,
