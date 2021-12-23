@@ -25,3 +25,17 @@ article {
   padding-top: 1rem;
   padding-left: 0.5rem;
 }
+
+a[target] svg {
+  display: inline-block;
+  margin-left: .6rem;
+  opacity: .2;
+}
+
+.footer__links {
+  margin-bottom: 0;
+}
+
+.footer__copyright {
+  display: none;
+}
