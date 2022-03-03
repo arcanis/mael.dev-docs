@@ -1,77 +1,79 @@
 import hljs from 'highlight.js';
 
-window.tooltipContainer?.remove();
-
 declare global {
   interface Window {
     tooltipContainer?: HTMLElement;
   }
 }
 
-const tooltipContainer = window.tooltipContainer = document.createElement(`div`);
-tooltipContainer.classList.add(`custom-twoslash-tooltip`);
-tooltipContainer.style.display = `none`;
+if (typeof window !== `undefined`) {
+  window.tooltipContainer?.remove();
 
-const tooltipCode = document.createElement(`div`);
-tooltipCode.classList.add(`custom-twoslash-code`);
-tooltipContainer.appendChild(tooltipCode);
+  const tooltipContainer = window.tooltipContainer = document.createElement(`div`);
+  tooltipContainer.classList.add(`custom-twoslash-tooltip`);
+  tooltipContainer.style.display = `none`;
 
-const tooltipDescription = document.createElement(`div`);
-tooltipDescription.classList.add(`custom-twoslash-description`);
-tooltipContainer.appendChild(tooltipDescription);
+  const tooltipCode = document.createElement(`div`);
+  tooltipCode.classList.add(`custom-twoslash-code`);
+  tooltipContainer.appendChild(tooltipCode);
 
-document.body.classList.add(`custom-twoslash`);
-document.body.appendChild(tooltipContainer);
+  const tooltipDescription = document.createElement(`div`);
+  tooltipDescription.classList.add(`custom-twoslash-description`);
+  tooltipContainer.appendChild(tooltipDescription);
 
-document.body.addEventListener(`mouseenter`, e => {
-  const target = e.target! as HTMLElement;
-  if (target.nodeName !== `DATA-LSP`)
-    return;
+  document.body.classList.add(`custom-twoslash`);
+  document.body.appendChild(tooltipContainer);
 
-  const content = target.getAttribute(`lsp`)!;
+  document.body.addEventListener(`mouseenter`, e => {
+    const target = e.target! as HTMLElement;
+    if (target.nodeName !== `DATA-LSP`)
+      return;
 
-  let description = ``;
-  let code = content;
+    const content = target.getAttribute(`lsp`)!;
 
-  const dblLine = content.lastIndexOf(`\n\n`);
-  if (dblLine !== -1) {
-    description = content.slice(0, dblLine).trim();
-    code = content.slice(dblLine + 2).trim();
-  }
+    let description = ``;
+    let code = content;
 
-  const IRRELEVANT_CODE = [
-    /^import [A-Za-z]+$/,
-  ];
+    const dblLine = content.lastIndexOf(`\n\n`);
+    if (dblLine !== -1) {
+      description = content.slice(0, dblLine).trim();
+      code = content.slice(dblLine + 2).trim();
+    }
 
-  const isDescriptionVisible = !!description;
-  const isCodeVisible = !IRRELEVANT_CODE.some(pattern => code.match(pattern));
+    const IRRELEVANT_CODE = [
+      /^import [A-Za-z]+$/,
+    ];
 
-  tooltipDescription.style.display = isDescriptionVisible ? `block` : `none`;
-  tooltipDescription.innerText = ``;
+    const isDescriptionVisible = !!description;
+    const isCodeVisible = !IRRELEVANT_CODE.some(pattern => code.match(pattern));
 
-  for (const paragraphText of description.split(/\n\n/)) {
-    const paragraph = document.createElement(`p`);
-    paragraph.innerText = paragraphText;
-    tooltipDescription.appendChild(paragraph);
-  }
+    tooltipDescription.style.display = isDescriptionVisible ? `block` : `none`;
+    tooltipDescription.innerText = ``;
 
-  tooltipCode.style.display = isCodeVisible ? `block` : `none`;
-  tooltipCode.innerHTML = hljs.highlight(code, {language: `typescript`}).value;
+    for (const paragraphText of description.split(/\n\n/)) {
+      const paragraph = document.createElement(`p`);
+      paragraph.innerText = paragraphText;
+      tooltipDescription.appendChild(paragraph);
+    }
 
-  const position = getPosition(target);
+    tooltipCode.style.display = isCodeVisible ? `block` : `none`;
+    tooltipCode.innerHTML = hljs.highlight(code, {language: `typescript`}).value;
 
-  tooltipContainer.style.left = `${position.left}px`;
-  tooltipContainer.style.top = `${position.top + 20}px`;
+    const position = getPosition(target);
 
-  tooltipContainer.style.display = isDescriptionVisible || isCodeVisible ? `block` : `none`;
+    tooltipContainer.style.left = `${position.left}px`;
+    tooltipContainer.style.top = `${position.top + 20}px`;
 
-  const onleave = () => {
-    tooltipContainer.style.display = `none`;
-    target.removeEventListener(`mouseleave`, onleave);
-  };
+    tooltipContainer.style.display = isDescriptionVisible || isCodeVisible ? `block` : `none`;
 
-  target.addEventListener(`mouseleave`, onleave);
-}, true);
+    const onleave = () => {
+      tooltipContainer.style.display = `none`;
+      target.removeEventListener(`mouseleave`, onleave);
+    };
+
+    target.addEventListener(`mouseleave`, onleave);
+  }, true);
+}
 
 function getPosition(element: HTMLElement) {
   const clientRect = element.getBoundingClientRect();
