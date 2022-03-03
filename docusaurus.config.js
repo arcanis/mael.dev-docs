@@ -21,13 +21,7 @@ const safeUnlink = (/** @type string */ p) => {
   }
 };
 
-safeUnlink(path.join(__dirname, `docs`));
 safeUnlink(path.join(__dirname, `mael.config.js`));
-
-fs.symlinkSync(
-  path.join(docProjectCwd, `website/docs`),
-  path.join(__dirname, `docs`),
-);
 
 fs.symlinkSync(
   path.join(docProjectCwd, `website/config.js`),
@@ -79,6 +73,9 @@ generateCustomStyle();
 const customDocusaurusPlugin = (context, options) => {
   return {
     name: `mael-docusaurus-plugin`,
+    getClientModules() {
+      return [require.resolve(`./src/global.ts`)];
+    },
     configureWebpack(config, isServer, utils) {
       return {
         resolve: {
@@ -86,6 +83,8 @@ const customDocusaurusPlugin = (context, options) => {
           alias: {
             [`@doc/project`]: `${docProjectCwd}/`,
             [`@doc/template`]: `${__dirname}/`,
+            [`react`]: require.resolve(`react`),
+            [`@mdx-js/react`]: require.resolve(`@mdx-js/react`),
           },
         },
       };
@@ -115,18 +114,30 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          path: path.resolve(__dirname, `docs`),
+          path: path.resolve(docProjectCwd, `website/docs`),
           sidebarCollapsible: false,
           sidebarPath: require.resolve(`./sidebars.js`),
           editUrl: `https://github.com/arcanis/${baseConfig.repository}/tree/main/website`,
         },
         theme: {
           customCss: [
+            require.resolve(`highlight.js/styles/base16/edge-dark.css`),
             require.resolve(`./src/css/generated.css`),
             require.resolve(`./src/css/custom.css`),
           ],
         },
       }),
+    ],
+    [
+      `docusaurus-preset-shiki-twoslash`,
+      {
+        themes: [`min-light`, `nord`],
+        vfsRoot: docProjectCwd,
+        includeJSDocInHover: true,
+        defaultCompilerOptions: {
+          types: [`node`],
+        },
+      },
     ],
   ],
 

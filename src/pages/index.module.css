@@ -16,10 +16,37 @@
   }
 }
 
+.heroCode {
+  flex: auto;
+  margin-top: 40px;
+  text-align: left;
+}
+
+@media (min-width: 966px) {
+  .heroContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .heroInfo {
+    flex: none;
+    margin-top: 0;
+    margin-right: 40px;
+    width: 400px;
+  }
+}
+
+.heroInfo {
+  text-align: left;
+}
+
 .buttons {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+}
+
+.buttons * + * {
+  margin-left: 20px;
 }
 
 .getStarted {

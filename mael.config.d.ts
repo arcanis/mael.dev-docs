@@ -15,6 +15,7 @@ declare const config: {
   sidebar: Record<string, Array<string>>;
 
   index: {
+    overview: string;
     getStarted: string;
     features: Array<{
       title: string;

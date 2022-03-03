@@ -39,3 +39,45 @@ a[target] svg {
 .footer__copyright {
   display: none;
 }
+
+[data-theme="light"] .shiki.nord {
+  display: none;
+}
+
+[data-theme="dark"] .shiki.min-light {
+  display: none;
+}
+
+body.custom-twoslash data-lsp::before {
+  display: none !important;
+}
+
+data-lsp {
+  cursor: help;
+}
+
+.custom-twoslash-tooltip {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(0, 2px);
+  background-color: #3f3f3f;
+  color: #ffffff;
+  padding: 0px 12px;
+  max-width: 600px;
+  border-radius: 2px;
+  font-size: 85%;
+  white-space: pre-wrap;
+  z-index: 10;
+}
+
+.custom-twoslash-tooltip div, .custom-twoslash-tooltip p {
+  margin: 12px 0;
+}
+
+.custom-twoslash-description {
+  font-family: var(--ifm-font-family-base);
+}
+
+.custom-twoslash-code {
+  font-family: var(--ifm-font-family-monospace);
+}
