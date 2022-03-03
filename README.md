@@ -1,41 +1,35 @@
-# Website
+# Documentation Boilerplate
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+The following repository contains a generic [Docusaurus](https://docusaurus.io/) setup used across all my project websites. This avoids me having to keep them all in sync, which would be an impossible task.
 
-### Installation
+## Development
 
-```
-$ yarn
-```
-
-### Local Development
+To work on the website, clone this repository, clone another of my projects (for example [Clipanion](https://github.com/arcanis/clipanion)), run an install in both, then run the following command:
 
 ```
-$ yarn start
+DOC_PROJECT_CWD=~/path/to/clipanion yarn start
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+## Deployment
 
-### Build
+> You probably shouldn't use my boilerplate for your projects, as I make no guarantee that I won't make breaking changes.
 
-```
-$ yarn build
-```
+I use Netlify to deploy my open-source websites, with the following configuration on each one:
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
+**Base directory**
 
 ```
-$ USE_SSH=true yarn deploy
+website
 ```
 
-Not using SSH:
+**Build command**
 
 ```
-$ GIT_USER=<Your GitHub username> yarn deploy
+curl https://raw.githubusercontent.com/arcanis/mael.dev-docs/main/install.sh | tee /dev/stderr | bash
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+**Publish directory**
+
+```
+website/build
+```

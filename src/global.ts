@@ -52,7 +52,7 @@ if (typeof window !== `undefined`) {
 
     for (const paragraphText of description.split(/\n\n/)) {
       const paragraph = document.createElement(`p`);
-      paragraph.innerText = paragraphText;
+      paragraph.innerText = paragraphText.replace(/\n/g, ` `);
       tooltipDescription.appendChild(paragraph);
     }
 
@@ -61,8 +61,17 @@ if (typeof window !== `undefined`) {
 
     const position = getPosition(target);
 
-    tooltipContainer.style.left = `${position.left}px`;
     tooltipContainer.style.top = `${position.top + 20}px`;
+
+    if (window.innerWidth > 470) {
+      tooltipContainer.style.left = `${position.left}px`;
+      tooltipContainer.style.right = `auto`;
+      tooltipContainer.style.maxWidth = `${window.innerWidth - position.left - 30}px`;
+    } else {
+      tooltipContainer.style.left = `30px`;
+      tooltipContainer.style.right = `30px`;
+      tooltipContainer.style.maxWidth = `auto`;
+    }
 
     tooltipContainer.style.display = isDescriptionVisible || isCodeVisible ? `block` : `none`;
 

@@ -17,9 +17,14 @@
 }
 
 .heroCode {
+  overflow: auto;
   flex: auto;
-  margin-top: 40px;
+  margin-top: 2rem;
   text-align: left;
+}
+
+.heroCode pre {
+  margin: 0;
 }
 
 @media (min-width: 966px) {
@@ -31,8 +36,12 @@
   .heroInfo {
     flex: none;
     margin-top: 0;
-    margin-right: 40px;
+    margin-right: 6rem;
     width: 400px;
+  }
+
+  .heroCode {
+    margin-top: 0;
   }
 }
 
@@ -41,12 +50,39 @@
 }
 
 .buttons {
-  display: flex;
-  justify-content: flex-start;
+  margin: 2rem 0;
 }
 
 .buttons * + * {
-  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.buttons > * {
+  width: 100%;
+}
+
+@media (min-width: 470px) {
+  .buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+
+  .buttons * + * {
+    margin-top: 0;
+    margin-left: 20px;
+  }
+  
+  .buttons > * {
+    flex: 1;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 966px) {
+  .buttons > * {
+    width: 200px;
+    flex: none;
+  }
 }
 
 .getStarted {
