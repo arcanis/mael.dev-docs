@@ -98,7 +98,7 @@ const config = {
   tagline: baseConfig.description,
 
   url: `https://mael.dev/${baseConfig.repository}/`,
-  baseUrl: process.env.CONTEXT === `production` ? `/${baseConfig.repository}/` : `/`,
+  baseUrl: process.env.CI ? `/${baseConfig.repository}/` : `/`,
 
   onBrokenLinks: `throw`,
   onBrokenMarkdownLinks: `warn`,
